@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+
+# Secrets / env files
+.env
+.env.*
+
+# Local database files
+*.db
+*.sqlite
+*.sqlite3
+ai_ta.db
+
+# Runtime / generated artifacts
+data/
+reports/
+sandbox/
+
+# Cursor / editor
+.cursor/
+
+# Logs
+*.log
+

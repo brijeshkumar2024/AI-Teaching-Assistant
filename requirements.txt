@@ -1,0 +1,50 @@
+# Core LLM & Orchestration
+langchain==0.2.16
+langchain-google-genai==1.0.10
+langchain-openai==0.1.25
+langchain-community==0.2.16
+langgraph==0.2.28
+openai==1.35.0
+langchain-huggingface==0.4.0
+
+# Vector Store & Embeddings
+faiss-cpu==1.9.0.post1
+sentence-transformers==3.3.1
+
+# PDF & Document Processing
+pymupdf==1.25.5
+pypdf==4.3.1
+python-docx==1.1.2
+
+# Audio Transcription
+faster-whisper
+
+# Streamlit Frontend
+streamlit==1.38.0
+streamlit-chat==0.1.1
+plotly==5.24.1
+pandas==2.2.3
+
+# Database
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.35
+
+# PDF Report Generation
+reportlab==4.2.2
+fpdf2==2.7.9
+
+# Code Sandbox
+docker==7.1.0
+
+# Audio Input
+sounddevice==0.5.0
+soundfile==0.12.1
+numpy==1.26.4
+faster-whisper==0.6.1
+
+# Utilities
+python-dotenv==1.0.1
+pydantic==2.9.2
+tiktoken==0.7.0
+httpx==0.27.2
+tenacity==9.0.0

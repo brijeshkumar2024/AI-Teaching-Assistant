@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+
+  # ── Main Streamlit app ──────────────────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    container_name: ai_ta_app
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data                  # persist vector stores & course files
+      - ./.env:/app/.env:ro               # inject secrets
+    environment:
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/ai_ta
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - ai_ta_net
+
+  # ── PostgreSQL database ────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: ai_ta_db
+    environment:
+      POSTGRES_DB       : ai_ta
+      POSTGRES_USER     : postgres
+      POSTGRES_PASSWORD : ${POSTGRES_PASSWORD:-changeme}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test     : ["CMD-SHELL", "pg_isready -U postgres"]
+      interval : 10s
+      timeout  : 5s
+      retries  : 5
+    restart: unless-stopped
+    networks:
+      - ai_ta_net
+
+  # ── Code execution sandbox ─────────────────────────────────────────────
+  sandbox:
+    build:
+      context    : .
+      dockerfile : sandbox/Dockerfile
+    container_name : ai_ta_sandbox
+    image          : ai-ta-sandbox        # named so executor.py can reference it
+    network_mode   : none                 # zero network access
+    read_only      : true
+    tmpfs          :
+      - /tmp:size=16m
+    mem_limit      : 128m
+    cpus           : 0.5
+    restart        : "no"                 # spun up per-request, not persistent
+
+volumes:
+  pg_data:
+
+networks:
+  ai_ta_net:
+    driver: bridge
