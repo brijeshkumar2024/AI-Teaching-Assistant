@@ -32,4 +32,4 @@ reportlab==4.2.2
 fpdf2==2.7.9
 
 docker==7.1.0
-faster-whisper==0.6.1
+faster-whisper>=0.10.0
